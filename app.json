@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "crypto-live-price",
+    "slug": "crypto-live-price",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "crypto-live-price"
+}
