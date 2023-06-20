@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fetchPriceByCurrency } from './services/requests';
+import { errorHandler } from './helpers/errors';
 
 type CryptoPrices = {
   BTC: number,
@@ -22,10 +23,26 @@ export default function App() {
 
   useEffect(() => {
     //call initial price info from Coinbase on GET
-    fetchPriceByCurrency(CurrencyTypes.BTC);
-    fetchPriceByCurrency(CurrencyTypes.ETH);
-    fetchPriceByCurrency(CurrencyTypes.FLOW);
-    fetchPriceByCurrency(CurrencyTypes.ALGO);
+    const getAllPricesConcurrently = async() => {
+      const [priceBTC, priceETH, priceFlow, priceAlgo] = await Promise.all(
+        [
+          fetchPriceByCurrency(CurrencyTypes.BTC),
+          fetchPriceByCurrency(CurrencyTypes.ETH),
+          fetchPriceByCurrency(CurrencyTypes.FLOW),
+          fetchPriceByCurrency(CurrencyTypes.ALGO)
+        ]
+      );
+
+      setPrices({
+        BTC: priceBTC,
+        ETH: priceETH,
+        FLOW: priceFlow,
+        ALGO: priceAlgo
+      })
+    }
+
+    getAllPricesConcurrently();
+
     //instantiate websocket, pass handler
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
   })
