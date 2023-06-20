@@ -1,8 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+type CryptoPrices = {
+  BTC: number,
+  ETH: number,
+  FLOW: number,
+  ALGO: number,
+};
+
 export default function App() {
+  const [prices, setPrices] = useState<CryptoPrices | null>(null);
+
   useEffect(() => {
     //call initial price info from Coinbase on GET
 
