@@ -88,6 +88,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <Text>Work In Progress...</Text>
       <Text>CRYPTO LIVE PRICES</Text>
       {prices && (
         <View>
