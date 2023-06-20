@@ -2,34 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fetchPriceByCurrency } from './services/requests';
-import { errorHandler } from './helpers/errors';
 import { createTicketWebsocket } from './sockets/websockets';
-
-type CryptoPrices = {
-  BTC: number,
-  ETH: number,
-  FLOW: number,
-  ALGO: number,
-};
-
-export enum CurrencyTypes {
-  BTC = "BTC",
-  ETH = "ETH",
-  FLOW = "FLOW",
-  ALGO = "ALGO",
-}
-
-export enum MessageTypes {
-  BTC = "BTC-USD",
-  ETH = "ETH-USD",
-  FLOW = "FLOW-USD",
-  ALGO = "ALGO-USD",
-}
-
-export type ChangingPrices = {
-  currency: string,
-  price: number
-}
+import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from './types';
 
 const initialPricesState = {
   BTC: 0,
@@ -117,10 +91,10 @@ export default function App() {
       <Text>CRYPTO LIVE PRICES</Text>
       {prices && (
         <View>
-          <Text>Prices: {prices.BTC}</Text>
-          <Text>Prices: {prices.ETH}</Text>
-          <Text>Prices: {prices.FLOW}</Text>
-          <Text>Prices: {prices.ALGO}</Text>
+          <Text>BTC: {prices.BTC}</Text>
+          <Text>ETH: {prices.ETH}</Text>
+          <Text>FLOW: {prices.FLOW}</Text>
+          <Text>ALGO: {prices.ALGO}</Text>
         </View>
       )
       }
