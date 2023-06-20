@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useEffect } from 'react/cjs/react.production.min';
 
 export default function App() {
   useEffect(() => {
@@ -11,7 +10,7 @@ export default function App() {
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
   })
 
-  const websocketMessageHandler = (message) => {
+  const websocketMessageHandler = (message: any) => {
     //parse message and use to change state
   }
 
