@@ -54,6 +54,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>CRYPTO LIVE PRICES</Text>
+      {prices && (
+        <View>
+          <Text>Prices: {prices.BTC}</Text>
+          <Text>Prices: {prices.ETH}</Text>
+          <Text>Prices: {prices.FLOW}</Text>
+          <Text>Prices: {prices.ALGO}</Text>
+        </View>
+      )
+      }
       <StatusBar style="auto" />
     </View>
   );
