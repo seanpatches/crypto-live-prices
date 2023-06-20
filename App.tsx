@@ -24,7 +24,7 @@ export default function App() {
   const [changingPrice, setChangingPrice] = useState<ChangingPrices>(initialChangingPricesState);
 
   useEffect(() => {
-    //call initial price info from Coinbase on GET
+    //call initial price info from Coinbase GET on pageload
     const getAllPricesConcurrently = async() => {
       const [priceBTC, priceETH, priceFlow, priceAlgo] = await Promise.all(
         [
@@ -43,24 +43,28 @@ export default function App() {
       })
     }
 
+    //to call an async function in useEffect, the function must be defined in useEffect
     getAllPricesConcurrently();
 
+    //defines websocket on mount to be destroyed on dismount
     const websocket = createTicketWebsocket(websocketMessageHandler);
-
     //instantiate websocket, pass handler
+
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
     return () => {
+      //close websocket on dismount
       websocket.close();
     }
   }, [])
 
   const websocketMessageHandler = (message: any) => {
-    //parse message and use to change state
+    //parse message and use to set changing state value
     const { product_id, price } = message;
     setChangingPrice({ currency: product_id, price })
   }
 
   const updatePrices = useCallback((newPriceData: ChangingPrices) => {
+    //parses the changing state, to effect current prices state, memoized by useCallback for optimization
     const { currency, price } = newPriceData;
     const newPrices = { ...prices}
     switch(currency) {
