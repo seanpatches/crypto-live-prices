@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fetchPriceByCurrency } from './services/requests';
 import { errorHandler } from './helpers/errors';
+import { createTicketWebsocket } from './sockets/websockets';
 
 type CryptoPrices = {
   BTC: number,
@@ -43,9 +44,14 @@ export default function App() {
 
     getAllPricesConcurrently();
 
+    const websocket = createTicketWebsocket();
+
     //instantiate websocket, pass handler
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
-  })
+    return () => {
+      websocket.close();
+    }
+  }, [])
 
   const websocketMessageHandler = (message: any) => {
     //parse message and use to change state
