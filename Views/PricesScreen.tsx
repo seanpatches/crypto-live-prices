@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription } from 'react-native';
-import { fetchPriceByCurrency } from '../services/requests';
+import { fetchAllCurrencies } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../types';
 import { PriceScreenStyles as styles } from '../styles/styles';
@@ -33,21 +33,9 @@ const PricesScreen = () => {
     //call initial price info from Coinbase GET on pageload
     const maintainPriceData = async() => {
       //TO-DO: LOOP THROUGH MASTER ARRAY OF MANY CURRENCIES, LOOSEN TYPING, LOOP DURING PROMISE.ALL
-      const [priceBTC, priceETH, priceFlow, priceAlgo] = await Promise.all(
-        [
-          fetchPriceByCurrency(CurrencyTypes.BTC),
-          fetchPriceByCurrency(CurrencyTypes.ETH),
-          fetchPriceByCurrency(CurrencyTypes.FLOW),
-          fetchPriceByCurrency(CurrencyTypes.ALGO)
-        ]
-      );
+      const fetchedPrices = await fetchAllCurrencies();
 
-      setPrices({
-        BTC: priceBTC,
-        ETH: priceETH,
-        FLOW: priceFlow,
-        ALGO: priceAlgo
-      })
+      setPrices(fetchedPrices)
       
       //defines websocket on mount to be destroyed on dismount
       websocket = createTickerWebsocket(websocketMessageHandler);
