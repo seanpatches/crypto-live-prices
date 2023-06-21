@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, Image, Text } from 'react-native';
-import { defaultImage, images } from '../../../helpers/images';
+import { defaultImage, getImage, images } from '../../../helpers/images';
 import { CurrencyTypes } from '../../../types';
 import { PriceScreenStyles as styles } from '../../../styles/styles';
 
@@ -13,9 +13,10 @@ const Row: FC<RowProps> = ({
   price,
   currency
 }) => {
+  const image = getImage(currency);
   return (
     <View  style={styles.row}>
-      <Image source={{ uri: images[currency as CurrencyTypes]} || defaultImage} style={styles.rowImage} />
+      <Image source={{ uri: image}} style={styles.rowImage} />
       <Text style={styles.nameText}>{currency}:</Text>
       <Text style={styles.priceText}>${price}</Text>
     </View>
