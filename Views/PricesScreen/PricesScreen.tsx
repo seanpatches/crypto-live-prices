@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AppState, View, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
 import { fetchAllCurrencies } from '../../services/requests';
 import { createTickerWebsocket } from '../../sockets/websockets';
@@ -8,7 +8,7 @@ import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
 import { lightColor } from '../../styles/colors';
 
-const PricesScreen = () => {
+const PricesScreen: FC = () => {
   //displayed array
   const [prices, setPrices] = useState<CryptoPrices | null>(null);
   //changing price
@@ -68,7 +68,7 @@ const PricesScreen = () => {
 
   useEffect(() => {
     //when the incoming data is set, this affects and changes the changing state value
-    updatePrices(changingPrice);
+    changingPrice && updatePrices(changingPrice);
   }, [changingPrice])
     
   //TO-DO: LOOP THROUGH PRICES TO MAKE LIST

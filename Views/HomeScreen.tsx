@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
     Image,
     Pressable,
@@ -10,9 +10,9 @@ import {
 import { HomeScreenProps } from '../types';
 import { HomeScreenStyles as styles } from '../styles/styles';
 
-export const HomeScreen = ({
+export const HomeScreen: FC<HomeScreenProps> = (
     navigation
-}: HomeScreenProps): React.JSX.Element => {
+): React.JSX.Element => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
