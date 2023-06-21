@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription } from 'react-native';
 import { fetchPriceByCurrency } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../types';
@@ -27,8 +27,11 @@ const PricesScreen = () => {
   const [appState, setAppState] = useState<string>(AppState.currentState);
 
   useEffect(() => {
+    let appStateListener: NativeEventSubscription | null = null;
+    let websocket: WebSocket | null = null;
+
     //call initial price info from Coinbase GET on pageload
-    const getAllPricesConcurrently = async() => {
+    const maintainPriceData = async() => {
       //TO-DO: LOOP THROUGH MASTER ARRAY OF MANY CURRENCIES, LOOSEN TYPING, LOOP DURING PROMISE.ALL
       const [priceBTC, priceETH, priceFlow, priceAlgo] = await Promise.all(
         [
@@ -44,19 +47,21 @@ const PricesScreen = () => {
         ETH: priceETH,
         FLOW: priceFlow,
         ALGO: priceAlgo
-      })}
-
+      })
+      
+      //defines websocket on mount to be destroyed on dismount
+      websocket = createTickerWebsocket(websocketMessageHandler);
+      //instantiate websocket, pass handler
+      
+      //to properly prevent needless rerenders, use AppState in the react-native to check status
+      appStateListener = AppState.addEventListener('change', (appStateBecomes: string) => {
+        setAppState(appStateBecomes);
+      });
+    }
+    
+    maintainPriceData();
     //to call an async function in useEffect, the function must be defined in useEffect
-    getAllPricesConcurrently();
-
-    //defines websocket on mount to be destroyed on dismount
-    const websocket = createTickerWebsocket(websocketMessageHandler);
-    //instantiate websocket, pass handler
-
-    //to properly prevent needless rerenders, use AppState in the react-native to check status
-    const appStateListener = AppState.addEventListener('change', (appStateBecomes: string) => {
-      setAppState(appStateBecomes);
-    });
+    //placing the websocket to follow the GET dramatically increases performance
 
     return () => {
       //clear all listeners
