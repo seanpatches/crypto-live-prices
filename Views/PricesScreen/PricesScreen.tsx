@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
+import { AppState, View, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
 import { fetchAllCurrencies } from '../../services/requests';
 import { createTickerWebsocket } from '../../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../../types';
 import { PriceScreenStyles as styles } from '../../styles/styles';
-import { images } from '../../helpers/images';
 import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
 import { lightColor } from '../../styles/colors';

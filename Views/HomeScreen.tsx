@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Image, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { HomeScreenProps } from '../types';
 import { HomeScreenStyles as styles } from '../styles/styles'

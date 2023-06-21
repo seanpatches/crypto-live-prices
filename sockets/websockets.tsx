@@ -1,6 +1,7 @@
-const baseUrl = "wss://ws-feed.exchange.coinbase.com";
 import { debounce } from 'lodash';
 import { getProductIDList } from '../types';
+
+const baseUrl = "wss://ws-feed.exchange.coinbase.com";
 
 const productIDList = getProductIDList();
 const coinbaseSubscriptionMessage = {
