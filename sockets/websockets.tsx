@@ -15,11 +15,21 @@ const coinbaseSubscriptionMessage = {
   ]
 }
 
-export const createTicketWebsocket = (websocketMessageHandler: (message: any) => void) => {
+export const createTickerWebsocket = (websocketMessageHandler: (message: any) => void) => {
   const tickerWebsocket = new WebSocket(baseUrl);
+
+  const restartWebsocket = () => {
+    //recreates the websocket if it is closed unintentionally
+    const reconnectTimeout = setTimeout(async () => {
+      createTickerWebsocket(websocketMessageHandler);
+      console.log('Reconnecting socket')
+      clearTimeout(reconnectTimeout);
+    }, 1000);
+  }
 
   tickerWebsocket.onopen = () => {
     console.log('connection open');
+    //coinbase specifically demands that a subscription message is sent within 5s of socket open
     tickerWebsocket.send(JSON.stringify(coinbaseSubscriptionMessage));
   };
 
@@ -29,7 +39,12 @@ export const createTicketWebsocket = (websocketMessageHandler: (message: any) =>
   };
 
   tickerWebsocket.onclose = (e) => {
-    console.log("closed", e.code, e.reason);
+    if (e.code === 1000) {
+      //this code can be provided on intentional closures to allow them without a reconnection
+      console.log("Websocket closed intentionally.")
+    } else {
+      restartWebsocket();
+    }
   };
 
   tickerWebsocket.onerror = (e) => {

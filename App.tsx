@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { fetchPriceByCurrency } from './services/requests';
-import { createTicketWebsocket } from './sockets/websockets';
+import { createTickerWebsocket } from './sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from './types';
 
 const initialPricesState = {
@@ -47,13 +47,20 @@ export default function App() {
     getAllPricesConcurrently();
 
     //defines websocket on mount to be destroyed on dismount
-    const websocket = createTicketWebsocket(websocketMessageHandler);
+    const websocket = createTickerWebsocket(websocketMessageHandler);
     //instantiate websocket, pass handler
 
+    const testDisconnect = setTimeout(async () => {
+      //tests an unintentional disconnect and reconnect for demo purposes
+      websocket.close(404);
+      clearTimeout(testDisconnect);
+    }, 10000);
+
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
+
     return () => {
-      //close websocket on dismount
-      websocket.close();
+      //close websocket on dismount, the 1000 code flags that it was intentional
+      websocket.close(1000);
     }
   }, [])
 
@@ -85,7 +92,7 @@ export default function App() {
   }, [prices])
 
   useEffect(() => {
-    //when the incoming data is set, this affects and changes the current state
+    //when the incoming data is set, this affects and changes the changing state value
     updatePrices(changingPrice);
   }, [changingPrice])
     
