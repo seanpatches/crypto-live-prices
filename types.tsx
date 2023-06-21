@@ -1,4 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { addUSDSuffix } from './helpers/strings';
 
 export enum CurrencyTypes {
   BTC = "BTC",
@@ -9,6 +10,10 @@ export enum CurrencyTypes {
 
 export const getCurrencyList = (): CurrencyTypes[] =>  {
   return Object.values(CurrencyTypes)
+}
+
+export const getProductIDList = (): string[] =>  {
+  return addUSDSuffix(Object.values(CurrencyTypes));
 }
 
 export type FoundCurrencyKey = keyof typeof CurrencyTypes;

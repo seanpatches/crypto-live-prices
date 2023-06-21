@@ -1,17 +1,14 @@
 const baseUrl = "wss://ws-feed.exchange.coinbase.com";
 import { debounce } from 'lodash';
+import { getProductIDList } from '../types';
 
+const productIDList = getProductIDList();
 const coinbaseSubscriptionMessage = {
   "type": "subscribe",
   "channels": [
     {
       "name": "ticker",
-      "product_ids": [
-          "BTC-USD",
-          "ETH-USD",
-          "FLOW-USD",
-          "ALGO-USD"
-      ]
+      "product_ids": productIDList
     }
   ]
 }

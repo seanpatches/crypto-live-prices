@@ -5,3 +5,8 @@ export const findTargetKey = (currency: string): FoundCurrencyKey => {
     const foundKey = currency.replace("-USD", "") as keyof typeof CurrencyTypes;
     return foundKey;
 }
+
+export const addUSDSuffix = (currencyList: string[]) => {
+    console.log(currencyList.map((currency) => `${currency}-USD`));
+    return currencyList.map((currency) => `${currency}-USD`)
+}
