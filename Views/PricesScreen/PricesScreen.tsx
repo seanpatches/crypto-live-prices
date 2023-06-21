@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription } from 'react-native';
+import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
 import { fetchAllCurrencies } from '../../services/requests';
 import { createTickerWebsocket } from '../../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../../types';
@@ -7,6 +7,7 @@ import { PriceScreenStyles as styles } from '../../styles/styles';
 import { images } from '../../helpers/images';
 import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
+import { lightColor } from '../../styles/colors';
 
 const initialChangingPricesState = {
   currency: "BTC-USD",
@@ -79,17 +80,19 @@ const PricesScreen = () => {
   return (
     <SafeAreaView style={styles.pricesContainer}>
       <StatusBar barStyle="dark-content" />
-        <ScrollView style={styles.pricesList}>
-        {prices ? (
-          Object.entries(prices).map((item) => {
-            const currency = item[0];
-            const price = item[1];
-            return <Row currency={currency} price={price} key={`row-${currency}`}/>
-          })
-        ) : (
-          <Text>LOADING!!!!</Text>
-        )}
-        </ScrollView>
+      <ScrollView style={styles.pricesList}>
+      {!prices ? (
+        Object.entries(prices).map((item) => {
+          const currency = item[0];
+          const price = item[1];
+          return <Row currency={currency} price={price} key={`row-${currency}`}/>
+        })
+      ) : (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={lightColor} />
+        </View>
+      )}
+      </ScrollView>
     </SafeAreaView>
   );
 }

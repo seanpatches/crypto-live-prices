@@ -45,13 +45,21 @@ export const HomeScreenStyles = StyleSheet.create({
 });
 
 export const PriceScreenStyles = StyleSheet.create({
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '70%',
+  },
   pricesContainer: {
     flex: 1,
     backgroundColor: mainBackground,
     alignItems: 'center',
+    height: '100%'
   },
   pricesList: {
     width: '100%',
+    height: '100%',
   },
   row: {
     flexDirection: 'row',
