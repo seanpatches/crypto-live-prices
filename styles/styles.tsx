@@ -23,6 +23,11 @@ export const HomeScreenStyles = StyleSheet.create({
     color: lightColor,
     textAlign: 'center',
   },
+  logo: {
+    width: 300,
+    height: 50,
+    resizeMode: 'contain',
+  },
   buttonContainer: {
     marginTop: 40,
     padding: 10,
