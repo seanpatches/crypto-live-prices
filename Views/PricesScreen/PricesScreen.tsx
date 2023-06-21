@@ -1,18 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription } from 'react-native';
-import { fetchAllCurrencies } from '../services/requests';
-import { createTickerWebsocket } from '../sockets/websockets';
-import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../types';
-import { PriceScreenStyles as styles } from '../styles/styles';
-import { images } from '../helpers/images';
-import { findTargetKey } from '../helpers/strings';
-
-const initialPricesState = {
-  BTC: 0,
-  ETH: 0,
-  FLOW: 0,
-  ALGO: 0,
-}
+import { fetchAllCurrencies } from '../../services/requests';
+import { createTickerWebsocket } from '../../sockets/websockets';
+import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../../types';
+import { PriceScreenStyles as styles } from '../../styles/styles';
+import { images } from '../../helpers/images';
+import { findTargetKey } from '../../helpers/strings';
+import Row from './components/Row';
 
 const initialChangingPricesState = {
   currency: "BTC-USD",
@@ -21,7 +15,7 @@ const initialChangingPricesState = {
 
 const PricesScreen = () => {
   //displayed array
-  const [prices, setPrices] = useState<CryptoPrices>(initialPricesState);
+  const [prices, setPrices] = useState<CryptoPrices | null>(null);
   //changing price
   const [changingPrice, setChangingPrice] = useState<ChangingPrices>(initialChangingPricesState);
   const [appState, setAppState] = useState<string>(AppState.currentState);
@@ -73,7 +67,7 @@ const PricesScreen = () => {
     const newPrices = { ...prices}
     const targetKey = findTargetKey(currency);
     newPrices[targetKey] = price;
-    setPrices(newPrices);
+    setPrices(newPrices as CryptoPrices);
   }, [prices, appState])
 
   useEffect(() => {
@@ -85,30 +79,17 @@ const PricesScreen = () => {
   return (
     <SafeAreaView style={styles.pricesContainer}>
       <StatusBar barStyle="dark-content" />
-      {prices && (
         <ScrollView style={styles.pricesList}>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.FLOW]}} style={styles.rowImage} />
-            <Text style={styles.nameText}>FLOW:</Text>
-            <Text style={styles.priceText}>${prices.FLOW}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ALGO]}} style={styles.rowImage} />
-            <Text style={styles.nameText}>ALGO:</Text>
-            <Text style={styles.priceText}>${prices.ALGO}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.BTC]}} style={styles.rowImage} />
-            <Text style={styles.nameText}>BTC:</Text>
-            <Text style={styles.priceText}>${prices.BTC}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ETH]}} style={styles.rowImage} />
-            <Text style={styles.nameText}>ETH:</Text>
-            <Text style={styles.priceText}>${prices.ETH}</Text>
-          </View>
+        {prices ? (
+          Object.entries(prices).map((item) => {
+            const currency = item[0];
+            const price = item[1];
+            return <Row currency={currency} price={price} key={`row-${currency}`}/>
+          })
+        ) : (
+          <Text>LOADING!!!!</Text>
+        )}
         </ScrollView>
-      )}
     </SafeAreaView>
   );
 }

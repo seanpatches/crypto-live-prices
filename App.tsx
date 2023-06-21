@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import PricesScreen from './Views/PricesScreen';
+import PricesScreen from './Views/PricesScreen/PricesScreen';
 import HomeScreen from './Views/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
