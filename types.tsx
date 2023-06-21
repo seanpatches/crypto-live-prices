@@ -1,5 +1,13 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+export enum CurrencyTypes {
+  BTC = "BTC",
+  ETH = "ETH",
+  FLOW = "FLOW",
+  ALGO = "ALGO",
+}
+
+export type FoundCurrencyKey = keyof typeof CurrencyTypes;
 
 export type RootStackParamList = {
   HomeScreen: undefined,
@@ -11,25 +19,8 @@ export type PricesScreenProps =  NativeStackScreenProps<RootStackParamList,'Pric
 
 
 export type CryptoPrices = {
-  BTC: number,
-  ETH: number,
-  FLOW: number,
-  ALGO: number,
+  [key in CurrencyTypes]: number;
 };
-
-export enum CurrencyTypes {
-  BTC = "BTC",
-  ETH = "ETH",
-  FLOW = "FLOW",
-  ALGO = "ALGO",
-}
-
-export enum MessageTypes {
-  BTC = "BTC-USD",
-  ETH = "ETH-USD",
-  FLOW = "FLOW-USD",
-  ALGO = "ALGO-USD",
-}
 
 export type ChangingPrices = {
   currency: string,

@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { fetchPriceByCurrency } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
-import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from '../types';
+import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../types';
 import { PriceScreenStyles as styles } from '../styles/styles';
 import { images } from '../helpers/images';
+import { findTargetKey } from '../helpers/strings';
 
 const initialPricesState = {
   BTC: 0,
@@ -68,7 +69,7 @@ const PricesScreen = () => {
   const websocketMessageHandler = (message: { product_id: string, price: number }): void => {
     //parse message and use to set changing state value
     const { product_id, price } = message;
-    setChangingPrice({ currency: product_id, price })
+    product_id && price && setChangingPrice({ currency: product_id, price })
   }
 
   const updatePrices = useCallback((newPriceData: ChangingPrices): void => {
@@ -77,20 +78,8 @@ const PricesScreen = () => {
     //parses the changing state, to effect current prices state, memoized by useCallback for optimization
     const { currency, price } = newPriceData;
     const newPrices = { ...prices}
-    switch(currency) {
-      case MessageTypes.BTC:
-        newPrices.BTC = price;
-        break
-      case MessageTypes.ETH:
-        newPrices.ETH = price;
-        break
-      case MessageTypes.FLOW:
-        newPrices.FLOW = price;
-        break
-      case MessageTypes.ALGO:
-        newPrices.ALGO = price;
-        break
-    }
+    const targetKey = findTargetKey(currency);
+    newPrices[targetKey] = price;
     setPrices(newPrices);
   }, [prices, appState])
 
