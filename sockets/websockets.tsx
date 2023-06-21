@@ -15,7 +15,7 @@ const coinbaseSubscriptionMessage = {
 };
 
 export const createTickerWebsocket = (
-    websocketMessageHandler: (message: any) => void
+    websocketMessageHandler: (message: WebSocketMessageEvent) => void
 ) => {
     const tickerWebsocket = new WebSocket(baseUrl);
 
