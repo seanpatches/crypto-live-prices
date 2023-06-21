@@ -14,7 +14,7 @@ export const HomeScreen = ({ navigation }: HomeScreenProps): React.JSX.Element =
             navigation.navigate("PricesScreen")
           }
         >
-          <Text style={styles.buttonText}>Check Out Crypto Price List</Text>
+          <Text style={styles.buttonText}>{"Crypto Price List >"}</Text>
         </Pressable>
       </View>
     </View>

@@ -22,7 +22,10 @@ export const HomeScreenStyles = StyleSheet.create({
     backgroundColor: lightColor,
     borderRadius: 12,
     padding: 10,
-    
+    shadowColor: '#fff',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
   },
   buttonText: {
     color: mainBackground,
