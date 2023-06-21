@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AppState, View, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
 import { fetchAllCurrencies } from '../../services/requests';
 import { createTickerWebsocket } from '../../sockets/websockets';
-import { CryptoPrices, ChangingPrices, CurrencyTypes } from '../../types';
+import { CryptoPrices, ChangingPrices } from '../../types';
 import { PriceScreenStyles as styles } from '../../styles/styles';
 import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';

@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { View, Image, Text } from 'react-native';
-import { defaultImage, getImage, images } from '../../../helpers/images';
-import { CurrencyTypes } from '../../../types';
+import { getImage } from '../../../helpers/images';
 import { PriceScreenStyles as styles } from '../../../styles/styles';
 
 type RowProps = {

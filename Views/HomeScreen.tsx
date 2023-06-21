@@ -1,18 +1,17 @@
-import React, { FC } from 'react';
+import React from 'react';
 import {
     Image,
     Pressable,
     StatusBar,
-    StyleSheet,
     Text,
     View
 } from 'react-native';
 import { HomeScreenProps } from '../types';
 import { HomeScreenStyles as styles } from '../styles/styles';
 
-export const HomeScreen: FC<HomeScreenProps> = (
+export const HomeScreen = ({
     navigation
-): React.JSX.Element => {
+}: HomeScreenProps): React.JSX.Element => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor="#6a51ae" />
