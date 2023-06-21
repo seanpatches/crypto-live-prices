@@ -2,12 +2,19 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { addUSDSuffix } from './helpers/strings';
 
 //this is the main currency typing, and additions to this will add to the project
+//currently, this project only supports currencies that are purchaseable on coinbase
 export enum CurrencyTypes {
   BTC = "BTC",
   ETH = "ETH",
   FLOW = "FLOW",
   ALGO = "ALGO",
   LTC = "LTC",
+  USDT = "USDT",
+  USDC = "USDC",
+  ADA = "ADA",
+  DOGE = "DOGE",
+  SOL = "SOL",
+  DOT = "DOT",
 }
 
 export const getCurrencyList = (): CurrencyTypes[] =>  {
