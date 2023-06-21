@@ -1,6 +1,16 @@
 import { StyleSheet } from "react-native";
 import { mainBackground, lightColor } from "./colors";
 
+export const NavigationStyles = StyleSheet.create({
+  backButton: {
+    marginLeft: -2,
+  },
+  backButtonText: {
+    color: mainBackground,
+    fontSize: 16,
+  },
+})
+
 export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,8 +41,7 @@ export const HomeScreenStyles = StyleSheet.create({
     color: mainBackground,
     fontSize: 22,
     fontWeight: 'bold',
-
-    }
+  }
 });
 
 export const PriceScreenStyles = StyleSheet.create({
