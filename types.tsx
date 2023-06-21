@@ -1,11 +1,13 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { addUSDSuffix } from './helpers/strings';
 
+//this is the main currency typing, and additions to this will add to the project
 export enum CurrencyTypes {
   BTC = "BTC",
   ETH = "ETH",
   FLOW = "FLOW",
   ALGO = "ALGO",
+  LTC = "LTC",
 }
 
 export const getCurrencyList = (): CurrencyTypes[] =>  {
