@@ -7,6 +7,10 @@ export enum CurrencyTypes {
   ALGO = "ALGO",
 }
 
+export const getCurrencyList = (): CurrencyTypes[] =>  {
+  return Object.values(CurrencyTypes)
+}
+
 export type FoundCurrencyKey = keyof typeof CurrencyTypes;
 
 export type RootStackParamList = {

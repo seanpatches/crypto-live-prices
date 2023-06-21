@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CryptoPrices, CurrencyTypes } from '../types';
+import { CryptoPrices, CurrencyTypes, getCurrencyList } from '../types';
 
 const suggestedParamsAxios = axios.create({
   baseURL: "https://api.coinbase.com/v2/prices"
@@ -17,7 +17,7 @@ export const fetchPriceByCurrency = async (currency: string): Promise<number> =>
 
 export const fetchAllCurrencies = async (): Promise<CryptoPrices> => {
   try {
-    const currenciesToWatch  = Object.values(CurrencyTypes).map((currency): Promise<number> => fetchPriceByCurrency(currency));
+    const currenciesToWatch  = getCurrencyList().map((currency): Promise<number> => fetchPriceByCurrency(currency));
     const returnedFetchArray = await Promise.all(
       currenciesToWatch
     );
