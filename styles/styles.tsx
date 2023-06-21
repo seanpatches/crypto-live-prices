@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
-import { mainBackground, lightColor } from "./colors";
+import { darkColor, lightColor } from "./colors";
 
 export const NavigationStyles = StyleSheet.create({
   backButton: {
     marginLeft: -2,
   },
   backButtonText: {
-    color: mainBackground,
+    color: darkColor,
     fontSize: 16,
   },
 })
@@ -14,7 +14,7 @@ export const NavigationStyles = StyleSheet.create({
 export const HomeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: mainBackground,
+    backgroundColor: darkColor,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -43,7 +43,7 @@ export const HomeScreenStyles = StyleSheet.create({
     shadowRadius: 3,
   },
   buttonText: {
-    color: mainBackground,
+    color: darkColor,
     fontSize: 22,
     fontWeight: 'bold',
   }
@@ -58,7 +58,7 @@ export const PriceScreenStyles = StyleSheet.create({
   },
   pricesContainer: {
     flex: 1,
-    backgroundColor: mainBackground,
+    backgroundColor: darkColor,
     alignItems: 'center',
     height: '100%'
   },
