@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ title: "Crypto Prices", headerStyle: { backgroundColor: lightColor}, headerTintColor: darkColor }}>
+      <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ title: "Crypto Live Prices", headerStyle: { backgroundColor: lightColor}, headerTintColor: darkColor }}>
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
