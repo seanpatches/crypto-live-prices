@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppState, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { AppState, StyleSheet, Text, View, Image, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { fetchPriceByCurrency } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from '../types';
@@ -101,7 +101,8 @@ const PricesScreen = () => {
     
   //TO-DO: LOOP THROUGH PRICES TO MAKE LIST
   return (
-    <View style={styles.pricesContainer}>
+    <SafeAreaView style={styles.pricesContainer}>
+      <StatusBar barStyle="dark-content" />
       {prices && (
         <ScrollView style={styles.pricesList}>
           <View style={styles.row}>
@@ -126,7 +127,7 @@ const PricesScreen = () => {
           </View>
         </ScrollView>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
