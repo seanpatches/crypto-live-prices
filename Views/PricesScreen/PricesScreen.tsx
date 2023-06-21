@@ -8,16 +8,11 @@ import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
 import { lightColor } from '../../styles/colors';
 
-const initialChangingPricesState = {
-  currency: "BTC-USD",
-  price: 0,
-}
-
 const PricesScreen = () => {
   //displayed array
   const [prices, setPrices] = useState<CryptoPrices | null>(null);
   //changing price
-  const [changingPrice, setChangingPrice] = useState<ChangingPrices>(initialChangingPricesState);
+  const [changingPrice, setChangingPrice] = useState<ChangingPrices | null>(null);
   const [appState, setAppState] = useState<string>(AppState.currentState);
 
   useEffect(() => {
@@ -61,8 +56,8 @@ const PricesScreen = () => {
   }
 
   const updatePrices = useCallback((newPriceData: ChangingPrices): void => {
-    //preventing rerender if the app is not forefront on device
-    if(appState !== "active") return;
+    //preventing rerender if the app is not forefront on device, or if loading in
+    if(appState !== "active" || !newPriceData) return;
     //parses the changing state, to effect current prices state, memoized by useCallback for optimization
     const { currency, price } = newPriceData;
     const newPrices = { ...prices}
