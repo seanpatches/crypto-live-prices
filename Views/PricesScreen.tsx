@@ -50,17 +50,19 @@ const PricesScreen = () => {
     const websocket = createTickerWebsocket(websocketMessageHandler);
     //instantiate websocket, pass handler
 
-    const testDisconnect = setTimeout(async () => {
+    const testDisconnectTimeout = setTimeout(async () => {
       //tests an unintentional disconnect and reconnect for demo purposes
-      websocket.close(404);
-      clearTimeout(testDisconnect);
-    }, 10000);
+      websocket.close();
+      clearTimeout(testDisconnectTimeout);
+    }, 1000);
 
     //to properly maintain websocket connections, use AppState in the react-native to reconnect
 
     return () => {
-      //close websocket on dismount, the 1000 code flags that it was intentional
-      websocket.close(1000);
+      //close websocket on dismount, if it still remains after component is discarded
+      clearTimeout(testDisconnectTimeout);
+      if(websocket) websocket.close();
+      console.log("dismount after close")
     }
   }, [])
 
