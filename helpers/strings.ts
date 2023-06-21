@@ -7,6 +7,5 @@ export const findTargetKey = (currency: string): FoundCurrencyKey => {
 };
 
 export const addUSDSuffix = (currencyList: string[]) => {
-    console.log(currencyList.map((currency) => `${currency}-USD`));
     return currencyList.map((currency) => `${currency}-USD`);
 };
