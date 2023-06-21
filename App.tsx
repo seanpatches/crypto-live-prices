@@ -15,6 +15,7 @@ const App = () => {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
+          options={{ headerShown: false }}
           />
         <Stack.Screen
           name="PricesScreen"
