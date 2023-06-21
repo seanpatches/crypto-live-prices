@@ -39,7 +39,12 @@ export const createTickerWebsocket = (websocketMessageHandler: (message: any) =>
   };
 
   tickerWebsocket.onclose = (e) => {
+    if (e.code === 1000 || e.code === 1001) {
+      //these 2 codes are provided by intentional closures to allow them without a reconnection
+      console.log("Websocket closed intentionally.")
+    } else {
       restartWebsocket();
+    }
   };
 
   tickerWebsocket.onerror = (e) => {
