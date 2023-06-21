@@ -55,8 +55,14 @@ export const PriceScreenStyles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  nameText: {
+    fontSize: 24,
+    color: lightColor,
+    width: 80,
+    marginLeft: 10,
+  },
   priceText: {
-    paddingLeft: 20,
+    paddingLeft: 5,
     width: 200,
     fontSize: 22,
     color: lightColor,

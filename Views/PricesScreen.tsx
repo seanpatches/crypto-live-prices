@@ -106,67 +106,23 @@ const PricesScreen = () => {
         <ScrollView style={styles.pricesList}>
           <View style={styles.row}>
             <Image source={{ uri: images[CurrencyTypes.FLOW]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>FLOW: {prices.FLOW}</Text>
+            <Text style={styles.nameText}>FLOW:</Text>
+            <Text style={styles.priceText}>${prices.FLOW}</Text>
           </View>
           <View style={styles.row}>
             <Image source={{ uri: images[CurrencyTypes.ALGO]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ALGO: {prices.ALGO}</Text>
+            <Text style={styles.nameText}>ALGO:</Text>
+            <Text style={styles.priceText}>${prices.ALGO}</Text>
           </View>
           <View style={styles.row}>
             <Image source={{ uri: images[CurrencyTypes.BTC]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>BTC: {prices.BTC}</Text>
+            <Text style={styles.nameText}>BTC:</Text>
+            <Text style={styles.priceText}>${prices.BTC}</Text>
           </View>
           <View style={styles.row}>
             <Image source={{ uri: images[CurrencyTypes.ETH]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ETH: {prices.ETH}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.FLOW]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>FLOW: {prices.FLOW}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ALGO]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ALGO: {prices.ALGO}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.BTC]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>BTC: {prices.BTC}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ETH]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ETH: {prices.ETH}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.FLOW]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>FLOW: {prices.FLOW}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ALGO]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ALGO: {prices.ALGO}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.BTC]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>BTC: {prices.BTC}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ETH]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ETH: {prices.ETH}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.FLOW]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>FLOW: {prices.FLOW}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ALGO]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ALGO: {prices.ALGO}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.BTC]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>BTC: {prices.BTC}</Text>
-          </View>
-          <View style={styles.row}>
-            <Image source={{ uri: images[CurrencyTypes.ETH]}} style={styles.rowImage} />
-            <Text style={styles.priceText}>ETH: {prices.ETH}</Text>
+            <Text style={styles.nameText}>ETH:</Text>
+            <Text style={styles.priceText}>${prices.ETH}</Text>
           </View>
         </ScrollView>
       )}
