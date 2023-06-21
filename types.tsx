@@ -1,3 +1,15 @@
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+
+export type RootStackParamList = {
+  HomeScreen: undefined,
+  PricesScreen: undefined,
+}
+
+export type HomeScreenProps = NativeStackScreenProps<RootStackParamList,'HomeScreen'>;
+export type PricesScreenProps =  NativeStackScreenProps<RootStackParamList,'PricesScreen'>;
+
+
 export type CryptoPrices = {
   BTC: number,
   ETH: number,
