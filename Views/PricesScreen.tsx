@@ -3,6 +3,7 @@ import { AppState, StyleSheet, Text, View, Image, ScrollView } from 'react-nativ
 import { fetchPriceByCurrency } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from '../types';
+import { PriceScreenStyles as styles } from '../styles/styles';
 
 const initialPricesState = {
   BTC: 0,
@@ -123,31 +124,5 @@ const PricesScreen = () => {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  pricesContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-  pricesList: {
-    width: "100%",
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderTopWidth: 1,
-  },
-  rowImage: {
-    width: 50,
-    height: 50,
-  },
-  priceText: {
-    paddingLeft: 20,
-    width: 200,
-    fontSize: 22
-  }
-});
 
 export default PricesScreen;

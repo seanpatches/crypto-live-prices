@@ -5,13 +5,14 @@ import HomeScreen from './Views/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
 import { Button } from 'react-native';
+import { mainBackground, lightColor } from './styles/colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ title: "Crypto Prices" }}>
+      <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ title: "Crypto Prices", headerStyle: { backgroundColor: lightColor}, headerTintColor: mainBackground }}>
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
