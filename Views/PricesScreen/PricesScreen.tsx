@@ -30,21 +30,22 @@ const PricesScreen = () => {
       //TO-DO: LOOP THROUGH MASTER ARRAY OF MANY CURRENCIES, LOOSEN TYPING, LOOP DURING PROMISE.ALL
       const fetchedPrices = await fetchAllCurrencies();
 
-      setPrices(fetchedPrices)
-      
       //defines websocket on mount to be destroyed on dismount
       websocket = createTickerWebsocket(websocketMessageHandler);
       //instantiate websocket, pass handler
-      
+
+      //sets prices, turns off loader
+      setPrices(fetchedPrices)
+
       //to properly prevent needless rerenders, use AppState in the react-native to check status
       appStateListener = AppState.addEventListener('change', (appStateBecomes: string) => {
         setAppState(appStateBecomes);
       });
     }
     
-    maintainPriceData();
     //to call an async function in useEffect, the function must be defined in useEffect
     //placing the websocket to follow the GET dramatically increases performance
+    maintainPriceData();
 
     return () => {
       //clear all listeners
@@ -81,7 +82,7 @@ const PricesScreen = () => {
     <SafeAreaView style={styles.pricesContainer}>
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.pricesList}>
-      {!prices ? (
+      {prices ? (
         Object.entries(prices).map((item) => {
           const currency = item[0];
           const price = item[1];
