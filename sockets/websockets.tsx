@@ -1,4 +1,5 @@
 const baseUrl = "wss://ws-feed.exchange.coinbase.com";
+import { debounce } from 'lodash';
 
 const coinbaseSubscriptionMessage = {
   "type": "subscribe",
@@ -33,10 +34,10 @@ export const createTickerWebsocket = (websocketMessageHandler: (message: any) =>
     tickerWebsocket.send(JSON.stringify(coinbaseSubscriptionMessage));
   };
 
-  tickerWebsocket.onmessage = (e) => {
+  tickerWebsocket.onmessage =  debounce ((e: WebSocketMessageEvent) => {
     const data = JSON.parse(e.data);
     websocketMessageHandler(data);
-  };
+  }, 100, { leading: true });
 
   tickerWebsocket.onclose = (e) => {
     if (e.code === 1000 || e.code === 1001) {
