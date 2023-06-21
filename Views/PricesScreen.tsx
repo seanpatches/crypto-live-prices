@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { AppState, StyleSheet, Text, View } from 'react-native';
 import { fetchPriceByCurrency } from '../services/requests';
 import { createTickerWebsocket } from '../sockets/websockets';
 import { CryptoPrices, ChangingPrices, CurrencyTypes, MessageTypes } from '../types';
@@ -22,6 +22,7 @@ const PricesScreen = () => {
   const [prices, setPrices] = useState<CryptoPrices>(initialPricesState);
   //changing price
   const [changingPrice, setChangingPrice] = useState<ChangingPrices>(initialChangingPricesState);
+  const [appState, setAppState] = useState<string>(AppState.currentState);
 
   useEffect(() => {
     //call initial price info from Coinbase GET on pageload
@@ -50,22 +51,28 @@ const PricesScreen = () => {
     const websocket = createTickerWebsocket(websocketMessageHandler);
     //instantiate websocket, pass handler
 
-    //to properly maintain websocket connections, use AppState in the react-native to reconnect is no longer open
+    //to properly prevent needless rerenders, use AppState in the react-native to check status
+    const appStateListener = AppState.addEventListener('change', (appStateBecomes: string) => {
+      setAppState(appStateBecomes);
+    });
 
     return () => {
+      //clear all listeners
       //close websocket on dismount, if it still remains after component is discarded
-      if(websocket) websocket.close();
-      console.log("dismount after close")
+      websocket?.close();
+      appStateListener?.remove();
     }
   }, [])
 
-  const websocketMessageHandler = (message: any) => {
+  const websocketMessageHandler = (message: { product_id: string, price: number }): void => {
     //parse message and use to set changing state value
     const { product_id, price } = message;
     setChangingPrice({ currency: product_id, price })
   }
 
-  const updatePrices = useCallback((newPriceData: ChangingPrices) => {
+  const updatePrices = useCallback((newPriceData: ChangingPrices): void => {
+    //preventing rerender if the app is not forefront on device
+    if(appState !== "active") return;
     //parses the changing state, to effect current prices state, memoized by useCallback for optimization
     const { currency, price } = newPriceData;
     const newPrices = { ...prices}
@@ -84,7 +91,7 @@ const PricesScreen = () => {
         break
     }
     setPrices(newPrices);
-  }, [prices])
+  }, [prices, appState])
 
   useEffect(() => {
     //when the incoming data is set, this affects and changes the changing state value
@@ -101,8 +108,7 @@ const PricesScreen = () => {
           <Text>FLOW: {prices.FLOW}</Text>
           <Text>ALGO: {prices.ALGO}</Text>
         </View>
-      )
-      }
+      )}
       <StatusBar style="auto" />
     </View>
   );
