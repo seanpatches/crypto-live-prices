@@ -4,8 +4,8 @@ import { getImage } from '../../../helpers/images';
 import { PriceScreenStyles as styles } from '../../../styles/styles';
 
 type RowProps = {
-  price: number,
-  currency: string,
+  price: number;
+  currency: string;
 }
 
 const Row: FC<RowProps> = ({
