@@ -7,11 +7,14 @@ import { RootStackParamList } from './types';
 import { Pressable, Text } from 'react-native';
 import { darkColor, lightColor } from './styles/colors';
 import { NavigationStyles as styles } from './styles/styles';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ title: "Crypto Live Prices", headerStyle: { backgroundColor: lightColor}, headerTintColor: darkColor }}>
         <Stack.Screen
@@ -37,6 +40,7 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 };
 
