@@ -1,12 +1,9 @@
 import { AnyAction } from 'redux';
-
-enum RootActions {
-  SAVE_PRICE = 'SAVE_PRICES'
-}
+import { RootActions } from './actions';
 
 export const rootReducer = (
   state = {
-    prices: []
+    prices: null
   },
   action: AnyAction
 ) => {

@@ -7,13 +7,15 @@ import { PriceScreenStyles as styles } from '../../styles/styles';
 import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
 import { lightColor } from '../../styles/colors';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/store';
+import { changePrices } from '../../redux/actions';
+import { getPricesSelector } from '../../redux/selectors';
 
 const PricesScreen: FC = () => {
-  //displayed array
-  const [prices, setPrices] = useState<CryptoPrices | null>(null);
-  //changing price
-  const [changingPrice, setChangingPrice] = useState<ChangingPrices | null>(null);
   const [appState, setAppState] = useState<string>(AppState.currentState);
+  //redux selectors and dispatch
+  const globalprices = useAppSelector((state: RootState) => state.root.prices)
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let appStateListener: NativeEventSubscription | null = null;
@@ -27,9 +29,9 @@ const PricesScreen: FC = () => {
       //defines websocket on mount to be destroyed on dismount
       websocket = createTickerWebsocket(websocketMessageHandler);
       //instantiate websocket, pass handler
-
-      //sets prices, turns off loader
-      setPrices(fetchedPrices)
+      
+      //sets prices to global state, turns off loader
+      dispatch(changePrices(fetchedPrices))
 
       //to properly prevent needless rerenders, use AppState in the react-native to check status
       appStateListener = AppState.addEventListener('change', (appStateBecomes: string) => {
@@ -52,32 +54,30 @@ const PricesScreen: FC = () => {
   const websocketMessageHandler = (message: ParsedWebsocketMessage): void => {
     //parse message and use to set changing state value
     const { product_id, price } = message;
-    product_id && price && setChangingPrice({ currency: product_id, price })
+    product_id && price && updatePrices({ currency: product_id, price });
   }
 
-  const updatePrices = useCallback((newPriceData: ChangingPrices): void => {
+  const updatePrices = useCallback(async(newPriceData: ChangingPrices): Promise<void> => {
     //preventing rerender if the app is not forefront on device, or if loading in
     if(appState !== "active" || !newPriceData) return;
+    const currentPrices = getPricesSelector();
     //parses the changing state, to effect current prices state, memoized by useCallback for optimization
     const { currency, price } = newPriceData;
-    const newPrices = { ...prices}
+    
+    const newPrices = { ...currentPrices}
     const targetKey = findTargetKey(currency);
     newPrices[targetKey] = price;
-    setPrices(newPrices as CryptoPrices);
-  }, [prices, appState])
+    dispatch(changePrices(newPrices))
+  }, [appState])
 
-  useEffect(() => {
-    //when the incoming data is set, this affects and changes the changing state value
-    changingPrice && updatePrices(changingPrice);
-  }, [changingPrice])
     
   //TO-DO: LOOP THROUGH PRICES TO MAKE LIST
   return (
     <SafeAreaView style={styles.pricesContainer}>
       <StatusBar barStyle="dark-content" />
       <ScrollView style={styles.pricesList}>
-      {prices ? (
-        Object.entries(prices).map((item) => {
+      {globalprices ? (
+        Object.entries(globalprices).map((item) => {
           const currency = item[0];
           const price = item[1];
           return <Row currency={currency} price={price} key={`row-${currency}`}/>
