@@ -1,5 +1,5 @@
 import { debounce } from 'lodash';
-import { getProductIDList } from '../types';
+import { ParsedWebsocketMessage, getProductIDList } from '../types';
 
 const baseUrl = 'wss://ws-feed.exchange.coinbase.com';
 
@@ -15,7 +15,7 @@ const coinbaseSubscriptionMessage = {
 };
 
 export const createTickerWebsocket = (
-  websocketMessageHandler: (message: WebSocketMessageEvent) => void
+  websocketMessageHandler: (message: ParsedWebsocketMessage) => void
 ) => {
   const tickerWebsocket = new WebSocket(baseUrl);
 

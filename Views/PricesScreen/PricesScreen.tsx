@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { AppState, View, ScrollView, SafeAreaView, StatusBar, NativeEventSubscription, ActivityIndicator } from 'react-native';
 import { fetchAllCurrencies } from '../../services/requests';
 import { createTickerWebsocket } from '../../sockets/websockets';
-import { CryptoPrices, ChangingPrices } from '../../types';
+import { CryptoPrices, ChangingPrices, ParsedWebsocketMessage } from '../../types';
 import { PriceScreenStyles as styles } from '../../styles/styles';
 import { findTargetKey } from '../../helpers/strings';
 import Row from './components/Row';
@@ -49,7 +49,7 @@ const PricesScreen: FC = () => {
     }
   }, [])
 
-  const websocketMessageHandler = (message: { product_id: string, price: number }): void => {
+  const websocketMessageHandler = (message: ParsedWebsocketMessage): void => {
     //parse message and use to set changing state value
     const { product_id, price } = message;
     product_id && price && setChangingPrice({ currency: product_id, price })
