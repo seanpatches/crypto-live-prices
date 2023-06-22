@@ -28,8 +28,8 @@ export const getProductIDList = (): string[] =>  {
 export type FoundCurrencyKey = keyof typeof CurrencyTypes;
 
 export type RootStackParamList = {
-  HomeScreen: undefined,
-  PricesScreen: undefined,
+  HomeScreen: undefined;
+  PricesScreen: undefined;
 }
 
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList,'HomeScreen'>;
@@ -41,6 +41,11 @@ export type CryptoPrices = {
 };
 
 export type ChangingPrices = {
-  currency: string,
-  price: number
+  currency: string;
+  price: number;
+}
+
+export type ParsedWebsocketMessage = {
+  product_id: string;
+  price: number;
 }
