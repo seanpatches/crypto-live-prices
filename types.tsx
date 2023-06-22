@@ -10,7 +10,7 @@ export enum CurrencyTypes {
   ALGO = "ALGO",
   LTC = "LTC",
   USDT = "USDT",
-  USDC = "USDC",
+  UNI = "UNI",
   ADA = "ADA",
   DOGE = "DOGE",
   SOL = "SOL",
